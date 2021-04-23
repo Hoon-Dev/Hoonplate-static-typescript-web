@@ -1,3 +1,11 @@
+/*
+    name: hoon-path-helper
+    author: Hoon-Dev
+    date: 21.04.23
+
+    desc: Views의 entry, plguins 자동 추출 및 패스 도우미
+*/
+
 /* Node.js 모듈 */
 const path = require("path");
 const fs = require("fs");
@@ -15,7 +23,7 @@ function resolveWithViewsPath(...paths){
     return path.resolve(__dirname, setting.VIEWS_PATH, ...paths);
 }
 
-(function findPath(recentPath="", depth=0){
+(function findDirectoryPathInViews(recentPath="", depth=0){
     try{
         var findedPaths = fs.readdirSync(resolveWithViewsPath(recentPath), {withFileTypes: true});
         for(var i=0;i<findedPaths.length;i++){
@@ -29,7 +37,7 @@ function resolveWithViewsPath(...paths){
                         template: resolveWithViewsPath(`${currentPath}/index.html`)
                     })
                 );
-                findPath(currentPath, depth+1);
+                findDirectoryPathInViews(currentPath, depth+1);
             }
         }
     }

@@ -1,3 +1,11 @@
+/*
+    name: webpack.config
+    author: Hoon-Dev
+    date: 21.04.23
+
+    desc: 웹팩 공통 설정 중개모듈
+*/
+
 /* Node.js 모듈 */
 const path = require("path");
 
