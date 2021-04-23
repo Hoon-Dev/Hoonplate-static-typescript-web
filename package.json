@@ -1,0 +1,10 @@
+{
+  "name": "typescript-static-front-end",
+  "version": "1.0.0",
+  "description": "typescript static front-end boilerplate",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "MIT"
+}
