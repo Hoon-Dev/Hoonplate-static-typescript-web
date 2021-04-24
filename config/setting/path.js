@@ -10,5 +10,9 @@
 const path = require("path");
 
 module.exports = {
+    OUTPUT_PATH: path.resolve(__dirname, "../../dist"),
+    SRC_PATH: path.resolve(__dirname, "../../src"),
+    ASSETS_PATH: path.resolve(__dirname, "../../src/assets"),
+    MODULES_PATH: path.resolve(__dirname, "../../src/modules"),
     VIEWS_PATH: path.resolve(__dirname, "../../src/views")
 }
