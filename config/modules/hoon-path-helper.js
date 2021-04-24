@@ -36,7 +36,7 @@ function isRoutableDirectory(dirent){
 
 let isDistructingCleared = true;
 hoonsole.log("Distructing views directory ...");
-(function findDirectoryPathInViews(recentPath="", depth=0){
+(function findDirectoryPathInViews(recentPath=""){
     try{
         let findedPaths = fs.readdirSync(resolveWithViewsPath(recentPath), {withFileTypes: true});
         if(isRoutableDirectory(findedPaths)){
@@ -44,14 +44,14 @@ hoonsole.log("Distructing views directory ...");
             pluginsFromViews.push(
                 new HtmlWebpackPlugin({
                     chunks: [recentPath],
-                    filename: (depth==1) ? `${recentPath}.html` : `${recentPath}/index.html`,
+                    filename: (recentPath == "index") ? `${recentPath}.html` : `${recentPath}/index.html`,
                     template: resolveWithViewsPath(`${recentPath}/index.html`)
                 })
             );
         }
         for(let i=0;i<findedPaths.length;i++){
             if(findedPaths[i].isDirectory())
-                findDirectoryPathInViews(recentPath ? `${recentPath}/${findedPaths[i].name}` : findedPaths[i].name, depth+1);
+                findDirectoryPathInViews(recentPath ? `${recentPath}/${findedPaths[i].name}` : findedPaths[i].name);
         }
     }
     catch(e){
