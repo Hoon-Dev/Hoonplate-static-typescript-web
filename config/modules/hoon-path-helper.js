@@ -21,11 +21,11 @@ let entryFromViews = {};
 let pluginsFromViews = [];
 
 function resolveWithViewsPath(...paths){
-    return path.resolve(__dirname, setting.VIEWS_PATH, ...paths);
+    return path.resolve(setting.VIEWS_PATH, ...paths);
 }
 
 let isDistructingCleared = true;
-hoonsole.log("Distructing Views directory ...");
+hoonsole.log("Distructing views directory ...");
 (function findDirectoryPathInViews(recentPath="", depth=0){
     try{
         var findedPaths = fs.readdirSync(resolveWithViewsPath(recentPath), {withFileTypes: true});
@@ -46,12 +46,17 @@ hoonsole.log("Distructing Views directory ...");
     }
     catch(e){
         isDistructingCleared = false;
-        hoonsole.error("Can't distructing Views directory");
-        console.log(e);
+        if(e.code == "ENOENT"){
+            hoonsole.error("Can't Find 'views' directory in 'src'");
+        }
+        else{
+            hoonsole.error("Can't distructing views directory");
+            console.dir(e);
+        }
         return;
     }
 })();
-hoonsole.log("Distructing Views directory ..."+(isDistructingCleared?"\x1b[32mO\n":"\x1b[31mX\n"));
+hoonsole.log("Distructing views directory ..."+(isDistructingCleared?"\x1b[32mO\n":"\x1b[31mX\n"));
 
 module.exports = {
     resolveWithViewsPath,
