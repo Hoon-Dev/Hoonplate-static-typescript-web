@@ -44,7 +44,7 @@ hoonsole.log("Distructing views directory ...");
             pluginsFromViews.push(
                 new HtmlWebpackPlugin({
                     chunks: [recentPath],
-                    filename: !depth ? `${recentPath}.html` : `${recentPath}/index.html`,
+                    filename: (depth==1) ? `${recentPath}.html` : `${recentPath}/index.html`,
                     template: resolveWithViewsPath(`${recentPath}/index.html`)
                 })
             );
