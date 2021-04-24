@@ -11,7 +11,10 @@ require("./modules/hoon-console.js").hoonsole.title();
 const path = require("path");
 
 /* 커스텀 모듈 */
-const {entryFromViews, pluginsFromViews} = require("./modules/hoon-path-helper.js");
+const { entryFromViews, pluginsFromViews } = require("./modules/hoon-path-helper.js");
+
+/* Webpack 플러그인 */
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -19,13 +22,23 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, "../dist"),
-        filename: "js/[chunkhash].js"
+        filename: "js/[chunkhash].js",
+        environment: {
+            const: false,
+            forOf: false,
+            module: false,
+            arrowFunction: false,
+            bigIntLiteral: false,
+            destructuring: false,
+            dynamicImport: false
+        }
     },
     module:{
         rules: [
         ]
     },
     plugins:[
-        ...pluginsFromViews
+        ...pluginsFromViews,
+        new CleanWebpackPlugin()
     ]
 }

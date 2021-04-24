@@ -15,7 +15,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 /* 커스텀 셋팅, 모듈 */
 const setting = require("../setting/path.js");
-const {hoonsole} = require("../modules/hoon-console.js");
+const { hoonsole } = require("../modules/hoon-console.js");
 
 let entryFromViews = {};
 let pluginsFromViews = [];

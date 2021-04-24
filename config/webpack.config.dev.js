@@ -14,8 +14,10 @@ module.exports = {
     ...require("./webpack.config.js"),
     devServer: {
         open: true,
+        port: 8080,
+        overlay: true,
         compress: true,
         disableHostCheck: true,
-        contentBase: path.join(__dirname, '../dist'),
+        contentBase: path.join(__dirname, '../dist')
     }
 }
