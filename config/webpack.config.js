@@ -5,15 +5,13 @@
 
     desc: 웹팩 공통 설정 중개모듈
 */
+require("./modules/hoon-console.js").hoonsole.title();
 
 /* Node.js 모듈 */
 const path = require("path");
 
-/* Webpack 플러그인 */
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-/* 커스텀 플러그인 */
-const {resolveWithViewsPath, entryFromViews, pluginsFromViews} = require("./modules/hoon-path-helper.js");
+/* 커스텀 모듈 */
+const {entryFromViews, pluginsFromViews} = require("./modules/hoon-path-helper.js");
 
 module.exports = {
     entry: {
