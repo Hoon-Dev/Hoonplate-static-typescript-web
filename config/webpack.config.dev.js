@@ -6,8 +6,8 @@
     desc: 개발용 웹팩 설정 모듈
 */
 
-/* Node.js 모듈 */
-const path = require("path");
+/* 커스텀 모듈 */
+const path = require("./setting/path.js");
 
 module.exports = {
     mode: "development",
@@ -18,6 +18,6 @@ module.exports = {
         overlay: true,
         compress: true,
         disableHostCheck: true,
-        contentBase: path.join(__dirname, '../dist')
+        contentBase: path.OUTPUT_PATH
     }
 }

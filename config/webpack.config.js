@@ -7,10 +7,8 @@
 */
 require("./modules/hoon-console.js").hoonsole.title();
 
-/* Node.js 모듈 */
-const path = require("path");
-
 /* 커스텀 모듈 */
+const path = require("./setting/path.js");
 const { entryFromViews, pluginsFromViews } = require("./modules/hoon-path-helper.js");
 
 /* Webpack 플러그인 */
@@ -21,7 +19,7 @@ module.exports = {
         ...entryFromViews
     },
     output: {
-        path: path.resolve(__dirname, "../dist"),
+        path: path.OUTPUT_PATH,
         filename: "js/[chunkhash].js",
         environment: {
             const: false,
@@ -40,5 +38,13 @@ module.exports = {
     plugins:[
         ...pluginsFromViews,
         new CleanWebpackPlugin()
-    ]
+    ],
+    resolve: {
+        alias: {
+          "@": path.SRC_PATH,
+          "@assets": path.ASSETS_PATH,
+          "@modules": path.MODULES_PATH,
+          "@views": path.VIEWS_PATH
+        }
+    }
 }
