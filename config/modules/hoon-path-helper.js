@@ -24,24 +24,34 @@ function resolveWithViewsPath(...paths){
     return path.resolve(setting.VIEWS_PATH, ...paths);
 }
 
+function isRoutableDirectory(dirent){
+    let routableFileCount = 0;
+    for(let i=0;i<dirent.length;i++){
+        if(dirent[i].name == "index.html" || dirent[i].name == "index.js"){
+            if(++routableFileCount == 2) return true;
+        }
+    }
+    return false;
+}
+
 let isDistructingCleared = true;
 hoonsole.log("Distructing views directory ...");
 (function findDirectoryPathInViews(recentPath="", depth=0){
     try{
-        var findedPaths = fs.readdirSync(resolveWithViewsPath(recentPath), {withFileTypes: true});
-        for(var i=0;i<findedPaths.length;i++){
-            if(findedPaths[i].isDirectory()){
-                let currentPath = recentPath ? `${recentPath}/${findedPaths[i].name}` : findedPaths[i].name;
-                entryFromViews[currentPath] = resolveWithViewsPath(`${currentPath}/index.js`);
-                pluginsFromViews.push(
-                    new HtmlWebpackPlugin({
-                        chunks: [currentPath],
-                        filename: !depth ? `${currentPath}.html` : `${currentPath}/index.html`,
-                        template: resolveWithViewsPath(`${currentPath}/index.html`)
-                    })
-                );
-                findDirectoryPathInViews(currentPath, depth+1);
-            }
+        let findedPaths = fs.readdirSync(resolveWithViewsPath(recentPath), {withFileTypes: true});
+        if(isRoutableDirectory(findedPaths)){
+            entryFromViews[recentPath] = resolveWithViewsPath(`${recentPath}/index.js`);
+            pluginsFromViews.push(
+                new HtmlWebpackPlugin({
+                    chunks: [recentPath],
+                    filename: !depth ? `${recentPath}.html` : `${recentPath}/index.html`,
+                    template: resolveWithViewsPath(`${recentPath}/index.html`)
+                })
+            );
+        }
+        for(let i=0;i<findedPaths.length;i++){
+            if(findedPaths[i].isDirectory())
+                findDirectoryPathInViews(recentPath ? `${recentPath}/${findedPaths[i].name}` : findedPaths[i].name, depth+1);
         }
     }
     catch(e){
