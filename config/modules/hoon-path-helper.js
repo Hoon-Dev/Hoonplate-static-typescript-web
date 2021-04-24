@@ -13,8 +13,9 @@ const fs = require("fs");
 /* Webpack 플러그인 */
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-/* 커스텀 셋팅 */
+/* 커스텀 셋팅, 모듈 */
 const setting = require("../setting/path.js");
+const {hoonsole} = require("../modules/hoon-console.js");
 
 let entryFromViews = {};
 let pluginsFromViews = [];
@@ -23,6 +24,8 @@ function resolveWithViewsPath(...paths){
     return path.resolve(__dirname, setting.VIEWS_PATH, ...paths);
 }
 
+let isDistructingCleared = true;
+hoonsole.log("Distructing Views directory ...");
 (function findDirectoryPathInViews(recentPath="", depth=0){
     try{
         var findedPaths = fs.readdirSync(resolveWithViewsPath(recentPath), {withFileTypes: true});
@@ -41,8 +44,14 @@ function resolveWithViewsPath(...paths){
             }
         }
     }
-    catch(e){return;}
+    catch(e){
+        isDistructingCleared = false;
+        hoonsole.error("Can't distructing Views directory");
+        console.log(e);
+        return;
+    }
 })();
+hoonsole.log("Distructing Views directory ..."+(isDistructingCleared?"\x1b[32mO\n":"\x1b[31mX\n"));
 
 module.exports = {
     resolveWithViewsPath,
